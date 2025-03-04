@@ -11,10 +11,15 @@ public class CustomPhysicsBody: MonoBehaviour
      * Initial velocity and Initial acceleration are used to so that the designer may adjust an initial
      * speed or value however a hybrid approach to allow velocity and acceleration variables to be adjustable 
      * by the physics engine rather than the inspector due to class encapsulation and control.
+     * Mass and restitution is used to account for bounciness and weight of the physics body object.
      */
     [SerializeField] private Vector2 initialVelocity;
     [SerializeField] private Vector2 initialAcceleration;
-    [SerializeField] float gravityScale = 0.5f;  
+    [SerializeField] float gravityScale = 1.0f; // Gravity scale (Default = 1, full gravity effect applied)
+    [SerializeField] private float mass = 1.0f;  // Mass property (Default = 1)
+    [SerializeField] private float restitution = 1.0f; // Restitution (Default = 1, full bounce)
+    [SerializeField] private bool isGrounded = false; // Tracks if object is on ground
+
 
     public Vector2 Velocity { get; private set; }
     public Vector2 Acceleration { get; private set; }
@@ -46,17 +51,40 @@ public class CustomPhysicsBody: MonoBehaviour
      * value.
      */
 
-    public Vector2 SetVelocity(Vector2 velocity) => Velocity = velocity;
+    public Vector2 SetVelocity(Vector2 velocity)
+    {
+        if (float.IsNaN(velocity.x) || float.IsNaN(velocity.y)) return Velocity; // Prevents NaN errors
+
+        // If new velocity is applied, wake up the object
+        if (velocity.magnitude > 0.1f)
+        {
+            SetGrounded(false);
+        }
+
+        // Manually stop very small movement
+        float velocityThreshold = 0.1f;
+        if (Mathf.Abs(velocity.x) < velocityThreshold) velocity.x = 0f;
+        if (Mathf.Abs(velocity.y) < velocityThreshold) velocity.y = 0f;
+
+        Velocity = velocity;
+        return Velocity;
+    }
+
     public Vector2 SetInitialVelocity(Vector2 newVelocity) => initialVelocity = newVelocity;
     public Vector2 SetAcceleration(Vector2 accel) => Acceleration = accel;
     public Vector2 SetInitialAcceleration(Vector2 newAccel) => initialAcceleration = newAccel;
+    public float SetRestitution(float newRestitution) => restitution = newRestitution;
+    public void SetGrounded(bool value) => isGrounded = value;
 
     /*
-     * The following method is used to get the gravity scale so that it can be used for
-     * calculations.
+     * The following methods are used to get the gravity scale, mass, and restitution 
+     * so that it can be used for calculations.
      */
 
     public float GetGravityScale() => gravityScale;
+    public float GetMass() => mass;  // Ensure mass is never negative
+    public float GetRestitution() => restitution;
+    public bool IsGrounded() => isGrounded;
     #endregion
 
 }

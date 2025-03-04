@@ -24,7 +24,7 @@ public class CircleSpawner : MonoBehaviour
             circle.transform.position = spawnCoords;
 
             CustomPhysicsBody pb = circle.GetComponent<CustomPhysicsBody>();
-            pb.SetInitialVelocity(new Vector2(Random.Range(-1.5f, 1.5f), 0));
+            pb.SetInitialVelocity(new Vector2(Random.Range(-10f, 10f), 0));
         }
     }
 }

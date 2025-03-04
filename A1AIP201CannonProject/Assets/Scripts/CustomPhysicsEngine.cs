@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -59,19 +59,26 @@ public class CustomPhysicsEngine : MonoBehaviour
      */
     private void UpdateVelocity(CustomPhysicsBody body, float deltaTime)
     {
-        // Get the current acceleration and gravity
-        Vector2 currentAcceleration = body.Acceleration;
-        Vector2 gravityEffect = new Vector2(0, CustomPhysicsBody.GRAVITY * body.GetGravityScale());
+        // If the object is grounded, skip gravity updates
+        if (body.IsGrounded()) return;
 
-        // Update velocity with acceleration
-        Vector2 updatedVelocity = body.Velocity + currentAcceleration * deltaTime;
+        // Apply gravity with optional mass scaling
+        float gravityEffect = CustomPhysicsBody.GRAVITY * body.GetGravityScale();
+        gravityEffect *= body.GetMass(); // F = mg
 
-        // Update velocity with gravity
-        updatedVelocity += gravityEffect * deltaTime;
+        // Apply gravity using gravity scale
+        Vector2 newAcceleration = new Vector2(body.Acceleration.x, body.Acceleration.y + gravityEffect);
 
-        // Set the new velocity back to the physics body
+        // Update velocity using acceleration
+        Vector2 updatedVelocity = body.Velocity + newAcceleration * deltaTime;
+
+        // Apply damping for smooth bounce decay
+        float dampingFactor = 0.99f;
+        updatedVelocity *= dampingFactor;
+
         body.SetVelocity(updatedVelocity);
     }
+
 
     /*
      * UpdatePosition is called to update the positions of the custom physics body by adding the position to the 
@@ -83,50 +90,210 @@ public class CustomPhysicsEngine : MonoBehaviour
         body.transform.position += (Vector3)body.Velocity * deltaTime;
     }
 
+    #region Collision Check Methods
     /*
-     * CheckCollisions is called to check whether the custom colliders are colliding. Using the list, it iterates and compares a point collider to
-     * an axis-aligned rectangle. As it checks the bounds, it will determine whether the point has collides with the rectanlge and will
-     * print a debug statement and destroy the point collider for testing.
+     * CheckCollisions is called to check whether the custom colliders are colliding. Using the list, it iterates and compares all
+     * objects which can collide. Based on the type of collision, an action is performed in response.
      */
     private void CheckCollisions()
     {
         for (int i = 0; i < colliders.Count - 1; i++)
         {
-            CustomCollider a = colliders[i];
-
             for (int j = i + 1; j < colliders.Count; j++)
             {
+                CustomCollider a = colliders[i];
                 CustomCollider b = colliders[j];
 
-                bool pointToRect = (a.type == CustomCollider.Type.POINT && b.type == CustomCollider.Type.AXIS_ALIGNED_RECTANGLE ||
-                                    b.type == CustomCollider.Type.POINT && a.type == CustomCollider.Type.AXIS_ALIGNED_RECTANGLE);
+                PointToRectCollisionCheck(a, b);
+                CircleToRectCollisionCheck(a, b);
+                CircleToCircleCollisionCheck(a, b);
 
-                if (pointToRect)
-                {
-                    CustomCollider point = a.type == CustomCollider.Type.POINT ? a : b;
-                    CustomCollider aaRect = b.type == CustomCollider.Type.AXIS_ALIGNED_RECTANGLE ? b : a;
-
-                    float width = aaRect.transform.localScale.x;
-                    float height = aaRect.transform.localScale.y;
-
-                    float lhs = aaRect.transform.localPosition.x - (width / 2f);
-                    float rhs = aaRect.transform.localPosition.x + (width / 2f);
-                    float top = aaRect.transform.localPosition.y + (height / 2f);
-                    float bot = aaRect.transform.localPosition.y - (height / 2f);
-
-                    bool onLHS = (point.transform.localPosition.x < lhs);
-                    bool onRHS = (point.transform.localPosition.x > rhs);
-                    bool below = (point.transform.localPosition.y < bot);
-                    bool above = (point.transform.localPosition.y > top);
-
-                    if (onLHS || onRHS || above || below) continue;
-
-                    Debug.Log("COLLISION DETECTED");
-                    Destroy(point.gameObject);
-                }
             }
         }
     }
+
+    private void CircleToCircleCollisionCheck(CustomCollider a, CustomCollider b)
+    {
+        if (!IsCollisionBetween(a, b, CustomCollider.Type.CIRCLE, CustomCollider.Type.CIRCLE)) return;
+
+        // Update bounds before using them
+        a.UpdateBounds();
+        b.UpdateBounds();
+
+        Bounds aBounds = a.GetBounds();
+        Bounds bBounds = b.GetBounds();
+
+        Vector2 aPos = aBounds.center;
+        Vector2 bPos = bBounds.center;
+        float aRad = aBounds.extents.x; // Radius = half of width
+        float bRad = bBounds.extents.x; // Radius = half of width
+
+        Vector2 aToB = bPos - aPos;
+        float distance = aToB.magnitude;
+        float intersectionDepth = (aRad + bRad) - distance;
+
+        // Fix: Prevent NaN errors when circles are at the same position
+        if (distance == 0) return; // If circles overlap perfectly, do nothing (temporary fix)
+
+        if (intersectionDepth > 0)
+        {
+            Debug.Log("Circle-Circle Collision");
+
+            CustomPhysicsBody bodyA = a.GetComponent<CustomPhysicsBody>();
+            CustomPhysicsBody bodyB = b.GetComponent<CustomPhysicsBody>();
+
+            float aMass = bodyA.GetMass();
+            float bMass = bodyB.GetMass();
+            float massCombined = aMass + bMass;
+
+            // Prevent division by zero
+            if (massCombined == 0) return;
+
+            // Compute normalized collision vectors
+            Vector2 bToAN = (aPos - bPos).normalized;
+            Vector2 aToBN = aToB.normalized;
+
+            // Fix potential NaN positions
+            if (float.IsNaN(bToAN.x) || float.IsNaN(bToAN.y) || float.IsNaN(aToBN.x) || float.IsNaN(aToBN.y))
+            {
+                Debug.LogError("NaN detected in collision resolution.");
+                return;
+            }
+
+            // Resolve penetration by pushing objects apart based on mass ratio
+            Vector2 aRes = bToAN * intersectionDepth * (bMass / massCombined);
+            Vector2 bRes = aToBN * intersectionDepth * (aMass / massCombined);
+
+            a.transform.position += (Vector3)aRes;
+            b.transform.position += (Vector3)bRes;
+
+            /*
+            *  Applies the elastic collision formula to swap velocities based on mass and restitution.
+            */
+            Vector2 vA = bodyA.Velocity;
+            Vector2 vB = bodyB.Velocity;
+            Vector2 newVA = ((aMass - bMass) / massCombined) * vA + ((2 * bMass) / massCombined) * vB;
+            Vector2 newVB = ((bMass - aMass) / massCombined) * vB + ((2 * aMass) / massCombined) * vA;
+
+            // Apply restitution for realistic bounce
+            float restitutionDecay = 0.98f;
+            bodyA.SetRestitution(bodyA.GetRestitution() * restitutionDecay);
+            bodyB.SetRestitution(bodyB.GetRestitution() * restitutionDecay);
+
+            bodyA.SetVelocity(newVA * bodyA.GetRestitution());
+            bodyB.SetVelocity(newVB * bodyB.GetRestitution());
+        }
+    }
+
+
+    private void CircleToRectCollisionCheck(CustomCollider a, CustomCollider b)
+    {
+        if (!IsCollisionBetween(a, b, CustomCollider.Type.CIRCLE, CustomCollider.Type.AXIS_ALIGNED_RECTANGLE))
+            return;
+
+        CustomCollider circle = (a.type == CustomCollider.Type.CIRCLE) ? a : b;
+        CustomCollider aaRect = (b.type == CustomCollider.Type.AXIS_ALIGNED_RECTANGLE) ? b : a;
+
+        // Update bounds before using them
+        circle.UpdateBounds();
+        aaRect.UpdateBounds();
+
+        Bounds circleBounds = circle.GetBounds();
+        Bounds rectBounds = aaRect.GetBounds();
+
+        Vector2 circlePos = circleBounds.center;
+        Vector2 rectPos = rectBounds.center;
+        float circleRadius = circleBounds.extents.x;
+
+        // Get rectangle bounds
+        float leftBound = rectBounds.min.x;
+        float rightBound = rectBounds.max.x;
+        float topBound = rectBounds.max.y;
+        float bottomBound = rectBounds.min.y;
+
+        // Find the closest point on the rectangle to the circle
+        float closestX = Mathf.Clamp(circlePos.x, leftBound, rightBound);
+        float closestY = Mathf.Clamp(circlePos.y, bottomBound, topBound);
+        Vector2 closestPoint = new Vector2(closestX, closestY);
+
+        // Collision check
+        Vector2 circleToClosest = closestPoint - circlePos;
+        if (circleToClosest.sqrMagnitude >= circleRadius * circleRadius)
+            return; // No collision
+
+        CustomPhysicsBody body = circle.GetComponent<CustomPhysicsBody>();
+        Vector2 normal = circleToClosest.normalized;
+
+        Debug.Log("Circle-Rect Collision");
+
+        // Check if the circle is **only touching the top**
+        bool touchingTop = (Mathf.Abs(circlePos.y - topBound) < circleRadius);
+        bool fullyOnTop = (circlePos.x - circleRadius > leftBound && circlePos.x + circleRadius < rightBound);
+
+        // Only ground if touching the top AND fully on top
+        if (touchingTop && fullyOnTop && Mathf.Abs(body.Velocity.y) < 0.2f)
+        {
+            body.SetVelocity(Vector2.zero);
+            body.SetGrounded(true);
+            body.transform.position = new Vector2(circlePos.x, topBound + circleRadius + 0.01f);
+            Debug.Log("Object is grounded and stopped.");
+            return;
+        }
+
+        // If the circle is **not fully over the rectangle's top**, gravity resumes
+        if (!fullyOnTop || !touchingTop)
+        {
+            body.SetGrounded(false);
+            Debug.Log("Circle is NOT fully on top - resuming gravity.");
+        }
+
+        // Apply reflection only if it is a valid bounce
+        float restitutionDecay = 0.98f;
+        float newRestitution = body.GetRestitution() * restitutionDecay;
+        body.SetRestitution(newRestitution);
+        Vector2 reflectedVelocity = Vector2.Reflect(body.Velocity, normal) * newRestitution;
+
+        // Fix tiny movement that prevent bouncing
+        if (Mathf.Abs(reflectedVelocity.magnitude) < 0.1f)
+            reflectedVelocity += normal * 0.2f;
+
+        body.SetVelocity(reflectedVelocity);
+    }
+
+    private void PointToRectCollisionCheck(CustomCollider a, CustomCollider b)
+    {
+        if (!IsCollisionBetween(a, b, CustomCollider.Type.POINT, CustomCollider.Type.AXIS_ALIGNED_RECTANGLE))
+            return;
+
+        CustomCollider point = (a.type == CustomCollider.Type.POINT) ? a : b;
+        CustomCollider aaRect = (b.type == CustomCollider.Type.AXIS_ALIGNED_RECTANGLE) ? b : a;
+
+        // Ensure bounds are updated before checking collisions
+        point.UpdateBounds();
+        aaRect.UpdateBounds();
+
+        Bounds pointBounds = point.GetBounds();
+        Bounds rectBounds = aaRect.GetBounds();
+
+        Vector2 pointPos = pointBounds.center;  // The point's position
+        Vector2 rectMin = rectBounds.min;  // Bottom-left corner of the rectangle
+        Vector2 rectMax = rectBounds.max;  // Top-right corner of the rectangle
+
+        // Check if the point is inside the rectangle's bounds
+        if (pointPos.x < rectMin.x || pointPos.x > rectMax.x ||
+            pointPos.y < rectMin.y || pointPos.y > rectMax.y)
+            return; // No collision
+
+        Debug.Log("Point-Rectangle Collision");
+        Destroy(point.gameObject);
+    }
+
+
+    private bool IsCollisionBetween(CustomCollider a, CustomCollider b, CustomCollider.Type typeA, CustomCollider.Type typeB)
+    {
+        return (a.type == typeA && b.type == typeB) || (a.type == typeB && b.type == typeA);
+    }
+    #endregion
 
     #region Register and Deregister methods
     // This method is used to register the CustomPhysicsBody upon generation, adding it to the list.

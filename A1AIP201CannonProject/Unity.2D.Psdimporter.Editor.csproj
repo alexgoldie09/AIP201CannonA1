@@ -56,9 +56,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Analyzer Include="C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
-    <Analyzer Include="D:\Personal\Unity Projects\AIP201CannonA1\A1AIP201CannonProject\Library\PackageCache\com.unity.collab-proxy@2.7.1\Lib\Editor\Unity.Plastic.Newtonsoft.Json.dll" />
-    <Analyzer Include="D:\Personal\Unity Projects\AIP201CannonA1\A1AIP201CannonProject\Library\PackageCache\com.unity.collab-proxy@2.7.1\Lib\Editor\log4netPlastic.dll" />
-    <Analyzer Include="D:\Personal\Unity Projects\AIP201CannonA1\A1AIP201CannonProject\Library\PackageCache\com.unity.collab-proxy@2.7.1\Lib\Editor\Unity.Plastic.Antlr3.Runtime.dll" />
     <Analyzer Include="D:\Unity\Hub\Editor\2022.3.32f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.SourceGenerators.dll" />
     <Analyzer Include="D:\Unity\Hub\Editor\2022.3.32f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
@@ -90,8 +87,8 @@
     <Compile Include="Library\PackageCache\com.unity.2d.psdimporter@8.0.5\Editor\UTK\Tooltips.cs" />
     <Compile Include="Library\PackageCache\com.unity.2d.psdimporter@8.0.5\Editor\PSDImporterEditorLayerTreeView.cs" />
     <Compile Include="Library\PackageCache\com.unity.2d.psdimporter@8.0.5\Editor\PSDImportPostProcessor.cs" />
-    <Compile Include="Library\PackageCache\com.unity.2d.psdimporter@8.0.5\Editor\TexturePlatformSettingsController.cs" />
     <Compile Include="Library\PackageCache\com.unity.2d.psdimporter@8.0.5\Editor\PSDImporter.cs" />
+    <Compile Include="Library\PackageCache\com.unity.2d.psdimporter@8.0.5\Editor\TexturePlatformSettingsController.cs" />
     <Compile Include="Library\PackageCache\com.unity.2d.psdimporter@8.0.5\Editor\UTK\UIColumn.cs" />
     <Compile Include="Library\PackageCache\com.unity.2d.psdimporter@8.0.5\Editor\AssemblyInfo.cs" />
     <Compile Include="Library\PackageCache\com.unity.2d.psdimporter@8.0.5\Editor\TexturePlatformSettingsView.cs" />

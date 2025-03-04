@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 6552354612176324910}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 3.73, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -101,6 +101,9 @@ MonoBehaviour:
   initialVelocity: {x: 0, y: 0}
   initialAcceleration: {x: 0, y: 0}
   gravityScale: 1
+  mass: 1
+  restitution: 1
+  isGrounded: 0
 --- !u!114 &4575441043357990387
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -113,4 +116,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3c62ebf6fcaa51438301de91c6cb60c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 0
+  type: 2
+  destroyThresholdY: -10
