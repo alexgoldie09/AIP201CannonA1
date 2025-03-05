@@ -6,11 +6,9 @@ public class CustomCollider: MonoBehaviour
 {
     /*
      * This class is used for creating the object's collider.
-     * It is separated via type and depending on which type will
-     * be used accordingly in the calculations for collisions.
-     * An enum is used to create a custom data set for the type,
-     * which is then made into a variable to be changed within the
-     * inspector.
+     * - It defines custom types to be used for various collision detection calculations. 
+     * - It establishes bounds and bound checks for the collider based on the type. 
+     * - Inherits from monobehaviour to use Unity's in-built Start() and Update().
      */
     public enum Type
     {
@@ -19,45 +17,55 @@ public class CustomCollider: MonoBehaviour
         CIRCLE
     }
 
-    public Type type;
+    public Type type; // The type of collider, set in the Inspector.
 
-    private Bounds colliderBounds; // Stores precomputed bounds
+    private Bounds colliderBounds; // Stores the computed bounding box for collision checks.
 
     [SerializeField]
-    private float destroyThresholdY = -10f; // Destroy the object if its y position is below this value
+    private float destroyThresholdY = -10f; // The y-position threshold below which the object is destroyed. Used for testing.
 
+    /*
+     * Start() is called when the object is initialised. 
+     * - Registers this collider in the CustomPhysicsEngine.
+     *  + A ternary operator is used just in case of an error in referencing the scene instance is null.
+     * - Updates its bounds to prepare for physics calculations.
+     */
 
-    private void Awake()
+    private void Start()
     {
-        /* 
-         * Add this object to the custom physics engine list, a ternary operator is used just in case of
-         * an error in referencing scene instance is null
-        */
         CustomPhysicsEngine.Instance?.RegisterCollider(this);
-        UpdateBounds(); // Precompute bounds
+        UpdateBounds();
     }
 
+    /*
+     * OnDestroy() is called when the object is about to be removed from the scene.
+     * - Deregisters this collider from the CustomPhysicsEngine to prevent errors.
+     *  + A ternary operator is used just in case of an error in referencing the scene instance is null.
+     */
     private void OnDestroy()
     {
-        /* 
-         * Remove this object from the custom physics engine list, a ternary operator is used just in case of
-         * an error in referencing the scene instance is null
-        */
         CustomPhysicsEngine.Instance?.DeregisterCollider(this);
     }
 
+    /*
+     * Update() is called once per frame.
+     * - Destroys the object if it falls below the defined y-threshold.
+     *  + This is useful for cleaning up off-screen objects in the game.
+     */
     private void Update()
     {
-        // Check if the object's y position is below the threshold
         if (transform.position.y < destroyThresholdY)
         {
             Destroy(gameObject);
         }
     }
 
-    /// <summary>
-    /// Calculates and updates the collider's bounds.
-    /// </summary>
+    /*
+     * UpdateBounds() adjusts the collider's bounds based on its type and current position.
+     * - AXIS_ALIGNED_RECTANGLE: Uses the object's position and scale for bounding.
+     * - CIRCLE: Uses the x-scale to determine radius and creates a square bounding box.
+     * - POINT: Assigns a very small bounding box for precision in point collisions.
+     */
     public void UpdateBounds()
     {
         Vector3 pos = transform.position;
@@ -74,23 +82,23 @@ public class CustomCollider: MonoBehaviour
         }
         else if (type == Type.POINT)
         {
-            // A point is very small, so we use a minimal size to avoid issues
             float pointSize = 0.01f; // Tiny box around the point
             colliderBounds = new Bounds(pos, new Vector3(pointSize, pointSize, 0));
         }
     }
 
-    /// <summary>
-    /// Returns the bounds of this collider.
-    /// </summary>
-    public Bounds GetBounds()
-    {
-        return colliderBounds;
-    }
+    /*
+     * GetBounds() returns the object's computed bounds for it's collider.
+     * - Used by the CustomPhysicsEngine for collision detection.
+     */
+    public Bounds GetBounds() => colliderBounds;
 
-    /// <summary>
-    /// Draws the collider bounds using Gizmos for debugging.
-    /// </summary>
+    /*
+    * OnDrawGizmos() draws the collider's bounds in the Unity Editor.
+    * - This helps visualise the collider in development.
+    *   + Blue color represents rectangles, yellow represents circles.
+    *   + Depending on the type, the approapriate Draw() function is used.
+    */
     private void OnDrawGizmos()
     {
         UpdateBounds(); // Ensure bounds are updated before drawing
@@ -103,7 +111,7 @@ public class CustomCollider: MonoBehaviour
         }
         else if (type == Type.CIRCLE)
         {
-            Gizmos.DrawWireSphere(colliderBounds.center, colliderBounds.extents.x); // Radius
+            Gizmos.DrawWireSphere(colliderBounds.center, colliderBounds.extents.x);
         }
     }
 }
