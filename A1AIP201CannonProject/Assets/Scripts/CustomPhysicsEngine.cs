@@ -105,7 +105,7 @@ public class CustomPhysicsEngine : MonoBehaviour
                 PointToRectCollisionCheck(a, b);
                 CircleToRectCollisionCheck(a, b);
                 CircleToCircleCollisionCheck(a, b);
-
+                PointToCircleCollisionCheck(a, b);
             }
         }
     }
@@ -300,6 +300,77 @@ public class CustomPhysicsEngine : MonoBehaviour
 
         Debug.Log("Point-Rectangle Collision");
         Destroy(point.gameObject);
+    }
+
+    private void PointToCircleCollisionCheck(CustomCollider a, CustomCollider b)
+    {
+        // Process only if one collider is a POINT and the other is a CIRCLE.
+        if (!IsCollisionBetween(a, b, CustomCollider.Type.POINT, CustomCollider.Type.CIRCLE))
+            return;
+
+        // Identify the point and the circle colliders.
+        CustomCollider pointCollider = (a.type == CustomCollider.Type.POINT) ? a : b;
+        CustomCollider circleCollider = (a.type == CustomCollider.Type.CIRCLE) ? a : b;
+
+        // Update bounds for accurate collision detection.
+        pointCollider.UpdateBounds();
+        circleCollider.UpdateBounds();
+
+        Vector2 pointPos = pointCollider.GetBounds().center;
+        Vector2 circlePos = circleCollider.GetBounds().center;
+        float circleRadius = circleCollider.GetBounds().extents.x;  // Assumes uniform scale for circles.
+        float pointRadius = pointCollider.GetBounds().extents.x;    // Should be the small value set for points.
+
+        float distance = Vector2.Distance(pointPos, circlePos);
+        // Check if the point is inside the circle (including the small radius for the point).
+        if (distance >= circleRadius + pointRadius)
+            return; // No collision.
+
+        Debug.Log("Point-Circle Collision");
+
+        // Get both physics bodies.
+        CustomPhysicsBody circleBody = circleCollider.GetComponent<CustomPhysicsBody>();
+        CustomPhysicsBody pointBody = pointCollider.GetComponent<CustomPhysicsBody>();
+        if (circleBody == null || pointBody == null)
+            return;
+
+        // Retrieve masses.
+        float circleMass = circleBody.GetMass();
+        float pointMass = pointBody.GetMass();
+        float combinedMass = circleMass + pointMass;
+        if (combinedMass == 0) return; // Safety check.
+
+        // Calculate the penetration depth.
+        float intersectionDepth = (circleRadius + pointRadius) - distance;
+
+        // Compute the collision normal (from the point to the circle).
+        Vector2 collisionNormal = (circlePos - pointPos).normalized;
+
+        // Resolve penetration: push the circle and point apart proportionally to their masses.
+        Vector2 circleResolution = collisionNormal * intersectionDepth * (pointMass / combinedMass);
+        Vector2 pointResolution = -collisionNormal * intersectionDepth * (circleMass / combinedMass);
+
+        circleCollider.transform.position += (Vector3)circleResolution;
+        pointCollider.transform.position += (Vector3)pointResolution;
+
+        // Retrieve current velocities.
+        Vector2 vCircle = circleBody.Velocity;
+        Vector2 vPoint = pointBody.Velocity;
+
+        // Compute the new velocity for the circle using the elastic collision formula:
+        // newV_circle = ((m_circle - m_point) / (m_circle + m_point)) * v_circle + ((2 * m_point) / (m_circle + m_point)) * v_point
+        Vector2 newCircleVelocity = ((circleMass - pointMass) / combinedMass) * vCircle + ((2 * pointMass) / combinedMass) * vPoint;
+
+        // Apply restitution decay similar to Circle-to-Circle.
+        float restitutionDecay = 0.98f;
+        circleBody.SetRestitution(circleBody.GetRestitution() * restitutionDecay);
+        newCircleVelocity *= circleBody.GetRestitution();
+
+        // Update the circle's velocity.
+        circleBody.SetVelocity(newCircleVelocity);
+
+        // Destroy the point after processing the collision.
+        Destroy(pointCollider.gameObject);
     }
 
     /*

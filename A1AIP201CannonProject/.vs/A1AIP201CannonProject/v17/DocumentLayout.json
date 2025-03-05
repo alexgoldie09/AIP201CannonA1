@@ -3,20 +3,32 @@
   "WorkspaceRootPath": "D:\\Personal\\Unity Projects\\AIP201CannonA1\\A1AIP201CannonProject\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{6150F832-415D-FCE0-C3A4-4A371061580D}|Assembly-CSharp.csproj|d:\\personal\\unity projects\\aip201cannona1\\a1aip201cannonproject\\assets\\scripts\\customphysicsengine.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{6150F832-415D-FCE0-C3A4-4A371061580D}|Assembly-CSharp.csproj|D:\\Personal\\Unity Projects\\AIP201CannonA1\\A1AIP201CannonProject\\assets\\scripts\\customphysicsengine.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{6150F832-415D-FCE0-C3A4-4A371061580D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\customphysicsengine.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{6150F832-415D-FCE0-C3A4-4A371061580D}|Assembly-CSharp.csproj|D:\\Personal\\Unity Projects\\AIP201CannonA1\\A1AIP201CannonProject\\assets\\scripts\\customcollider.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6150F832-415D-FCE0-C3A4-4A371061580D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\customcollider.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{6150F832-415D-FCE0-C3A4-4A371061580D}|Assembly-CSharp.csproj|D:\\Personal\\Unity Projects\\AIP201CannonA1\\A1AIP201CannonProject\\assets\\scripts\\cannoncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6150F832-415D-FCE0-C3A4-4A371061580D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\cannoncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6150F832-415D-FCE0-C3A4-4A371061580D}|Assembly-CSharp.csproj|d:\\personal\\unity projects\\aip201cannona1\\a1aip201cannonproject\\assets\\scripts\\cannonfire.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6150F832-415D-FCE0-C3A4-4A371061580D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\cannonfire.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6150F832-415D-FCE0-C3A4-4A371061580D}|Assembly-CSharp.csproj|d:\\personal\\unity projects\\aip201cannona1\\a1aip201cannonproject\\assets\\scripts\\trajectoryvisualiser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6150F832-415D-FCE0-C3A4-4A371061580D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\trajectoryvisualiser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6150F832-415D-FCE0-C3A4-4A371061580D}|Assembly-CSharp.csproj|D:\\Personal\\Unity Projects\\AIP201CannonA1\\A1AIP201CannonProject\\assets\\scripts\\circlespawner.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6150F832-415D-FCE0-C3A4-4A371061580D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\circlespawner.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{6150F832-415D-FCE0-C3A4-4A371061580D}|Assembly-CSharp.csproj|D:\\Personal\\Unity Projects\\AIP201CannonA1\\A1AIP201CannonProject\\assets\\scripts\\customphysicsbody.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{6150F832-415D-FCE0-C3A4-4A371061580D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\customphysicsbody.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{6150F832-415D-FCE0-C3A4-4A371061580D}|Assembly-CSharp.csproj|D:\\Personal\\Unity Projects\\AIP201CannonA1\\A1AIP201CannonProject\\assets\\scripts\\circlespawner.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6150F832-415D-FCE0-C3A4-4A371061580D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\circlespawner.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{6150F832-415D-FCE0-C3A4-4A371061580D}|Assembly-CSharp.csproj|D:\\Personal\\Unity Projects\\AIP201CannonA1\\A1AIP201CannonProject\\assets\\scripts\\customcollider.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6150F832-415D-FCE0-C3A4-4A371061580D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\customcollider.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,8 +38,47 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 3,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "TrajectoryVisualiser.cs",
+              "DocumentMoniker": "D:\\Personal\\Unity Projects\\AIP201CannonA1\\A1AIP201CannonProject\\Assets\\Scripts\\TrajectoryVisualiser.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\TrajectoryVisualiser.cs",
+              "ToolTip": "D:\\Personal\\Unity Projects\\AIP201CannonA1\\A1AIP201CannonProject\\Assets\\Scripts\\TrajectoryVisualiser.cs",
+              "RelativeToolTip": "Assets\\Scripts\\TrajectoryVisualiser.cs",
+              "ViewState": "AgIAAAEAAAAAAAAAAAAkwCcAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-05T17:45:11.766Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "CannonFire.cs",
+              "DocumentMoniker": "D:\\Personal\\Unity Projects\\AIP201CannonA1\\A1AIP201CannonProject\\Assets\\Scripts\\CannonFire.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\CannonFire.cs",
+              "ToolTip": "D:\\Personal\\Unity Projects\\AIP201CannonA1\\A1AIP201CannonProject\\Assets\\Scripts\\CannonFire.cs",
+              "RelativeToolTip": "Assets\\Scripts\\CannonFire.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAvAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-05T16:07:21.257Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "CannonController.cs",
+              "DocumentMoniker": "D:\\Personal\\Unity Projects\\AIP201CannonA1\\A1AIP201CannonProject\\Assets\\Scripts\\CannonController.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\CannonController.cs",
+              "ToolTip": "D:\\Personal\\Unity Projects\\AIP201CannonA1\\A1AIP201CannonProject\\Assets\\Scripts\\CannonController.cs",
+              "RelativeToolTip": "Assets\\Scripts\\CannonController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB0AAAAnAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-05T16:02:29.735Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
@@ -36,46 +87,45 @@
               "RelativeDocumentMoniker": "Assets\\Scripts\\CustomPhysicsEngine.cs",
               "ToolTip": "D:\\Personal\\Unity Projects\\AIP201CannonA1\\A1AIP201CannonProject\\Assets\\Scripts\\CustomPhysicsEngine.cs",
               "RelativeToolTip": "Assets\\Scripts\\CustomPhysicsEngine.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAFkBAABXAAAAAAAAAA==",
+              "ViewState": "AgIAAEwBAAAAAAAAAAAIwEgBAAApAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-02-25T06:17:17.457Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 5,
               "Title": "CustomPhysicsBody.cs",
               "DocumentMoniker": "D:\\Personal\\Unity Projects\\AIP201CannonA1\\A1AIP201CannonProject\\Assets\\Scripts\\CustomPhysicsBody.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\CustomPhysicsBody.cs",
               "ToolTip": "D:\\Personal\\Unity Projects\\AIP201CannonA1\\A1AIP201CannonProject\\Assets\\Scripts\\CustomPhysicsBody.cs",
               "RelativeToolTip": "Assets\\Scripts\\CustomPhysicsBody.cs",
-              "ViewState": "AgIAAD8AAAAAAAAAAAAowFoAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAEgAAAAAAAAAAAAowFoAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-02-25T06:17:16.19Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 6,
               "Title": "CustomCollider.cs",
               "DocumentMoniker": "D:\\Personal\\Unity Projects\\AIP201CannonA1\\A1AIP201CannonProject\\Assets\\Scripts\\CustomCollider.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\CustomCollider.cs",
               "ToolTip": "D:\\Personal\\Unity Projects\\AIP201CannonA1\\A1AIP201CannonProject\\Assets\\Scripts\\CustomCollider.cs",
               "RelativeToolTip": "Assets\\Scripts\\CustomCollider.cs",
-              "ViewState": "AgIAAEsAAAAAAAAAAAAowGAAAAAaAAAAAAAAAA==",
+              "ViewState": "AgIAAEAAAAAAAAAAAAAkwGAAAAAaAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-25T06:17:09.774Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-25T06:17:09.774Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "CircleSpawner.cs",
               "DocumentMoniker": "D:\\Personal\\Unity Projects\\AIP201CannonA1\\A1AIP201CannonProject\\Assets\\Scripts\\CircleSpawner.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\CircleSpawner.cs",
               "ToolTip": "D:\\Personal\\Unity Projects\\AIP201CannonA1\\A1AIP201CannonProject\\Assets\\Scripts\\CircleSpawner.cs",
               "RelativeToolTip": "Assets\\Scripts\\CircleSpawner.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAPAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACgAAABFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-02-25T06:14:55.091Z",
               "EditorCaption": ""

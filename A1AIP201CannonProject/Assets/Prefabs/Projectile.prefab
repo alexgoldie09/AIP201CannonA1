@@ -74,7 +74,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
   m_Color: {r: 1, g: 0.9059082, b: 0, a: 1}
   m_FlipX: 0
@@ -101,7 +101,7 @@ MonoBehaviour:
   initialVelocity: {x: 0, y: 0}
   initialAcceleration: {x: 0, y: 0}
   gravityScale: 1
-  mass: 1
+  mass: 2
   restitution: 1
   isGrounded: 0
 --- !u!114 &4575441043357990387

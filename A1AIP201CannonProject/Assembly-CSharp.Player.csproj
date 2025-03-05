@@ -61,8 +61,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\CustomCollider.cs" />
+    <Compile Include="Assets\Scripts\TrajectoryVisualiser.cs" />
     <Compile Include="Assets\Scripts\CustomPhysicsEngine.cs" />
+    <Compile Include="Assets\Scripts\CannonController.cs" />
     <Compile Include="Assets\Scripts\CustomPhysicsBody.cs" />
+    <Compile Include="Assets\Scripts\CannonFire.cs" />
     <Compile Include="Assets\Scripts\CircleSpawner.cs" />
   </ItemGroup>
   <ItemGroup>
