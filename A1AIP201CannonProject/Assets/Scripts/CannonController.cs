@@ -17,21 +17,27 @@ public class CannonController : MonoBehaviour
 
     private float angle = 45f; // Default angle, set pivot point to this angle
 
+    // New flag to control manual rotation.
+    public bool manualRotationEnabled = true;
+
     private void Update()
     {
-        // Adjust cannon angle
-        if (Input.GetKey(KeyCode.W)) { angle += angleSpeed * Time.deltaTime; }
-        if (Input.GetKey(KeyCode.S)) { angle -= angleSpeed * Time.deltaTime; }
-        angle = Mathf.Clamp(angle, 0, 65f); // Set the range of the cannon's angle
-        cannonPivot.rotation = Quaternion.Euler(0, 0, angle);
+        if (manualRotationEnabled)
+        {
+            // Adjust cannon angle
+            if (Input.GetKey(KeyCode.W)) { angle += angleSpeed * Time.deltaTime; }
+            if (Input.GetKey(KeyCode.S)) { angle -= angleSpeed * Time.deltaTime; }
+            angle = Mathf.Clamp(angle, 0, 65f); // Set the range of the cannon's angle
+            cannonPivot.rotation = Quaternion.Euler(0, 0, angle);
 
-        // Adjust cannon power
-        if (Input.GetKey(KeyCode.D)) { power += Time.deltaTime * 5f; }
-        if (Input.GetKey(KeyCode.A)) { power -= Time.deltaTime * 5f; }
-        power = Mathf.Clamp(power, minPower, maxPower);
+            // Adjust cannon power
+            if (Input.GetKey(KeyCode.D)) { power += Time.deltaTime * 5f; }
+            if (Input.GetKey(KeyCode.A)) { power -= Time.deltaTime * 5f; }
+            power = Mathf.Clamp(power, minPower, maxPower);
 
-        // Debugging: Print Angle & Power to Console
-        // Debug.Log($"Cannon Angle: {angle}°, Power: {power}");
+            // Debugging: Print Angle & Power to Console
+            // Debug.Log($"Cannon Angle: {angle}°, Power: {power}");
+        }
     }
 
     // Getters for firing logic

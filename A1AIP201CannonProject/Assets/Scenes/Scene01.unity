@@ -626,6 +626,7 @@ MonoBehaviour:
   mass: 0
   restitution: 0
   isGrounded: 0
+  isKinematic: 0
 --- !u!114 &849337214
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -790,6 +791,7 @@ MonoBehaviour:
   mass: 0
   restitution: 0
   isGrounded: 0
+  isKinematic: 0
 --- !u!114 &896854885
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1042,8 +1044,9 @@ MonoBehaviour:
   cannonPivot: {fileID: 724669226}
   angleSpeed: 30
   power: 15
-  maxPower: 25
+  maxPower: 35
   minPower: 8
+  manualRotationEnabled: 1
 --- !u!114 &1452384312
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1177,6 +1180,7 @@ MonoBehaviour:
   mass: 0
   restitution: 0
   isGrounded: 0
+  isKinematic: 0
 --- !u!1 &1683823902
 GameObject:
   m_ObjectHideFlags: 0

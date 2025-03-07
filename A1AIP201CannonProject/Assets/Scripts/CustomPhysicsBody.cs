@@ -17,10 +17,15 @@ public class CustomPhysicsBody: MonoBehaviour
      */
     [SerializeField] private Vector2 initialVelocity; // Allows setting an initial velocity in Inspector.
     [SerializeField] private Vector2 initialAcceleration; // Allows setting an initial acceleration in Inspector.
-    [SerializeField] float gravityScale = 1.0f; // Gravity multiplier (Default = 1, full gravity effect).
+    [SerializeField] private float gravityScale = 1.0f; // Gravity multiplier (Default = 1, full gravity effect).
+    [SerializeField] private float gravityDelay = 0f;
+
     [SerializeField] private float mass = 1.0f;  // Mass property (Default = 1, affects gravity & momentum).
     [SerializeField] private float restitution = 1.0f; // Restitution (Default = 1, determines bounce intensity).
     [SerializeField] private bool isGrounded = false; // Tracks if object is on the ground.
+                                                      // In CustomPhysicsBody.cs
+    [SerializeField] private bool isKinematic = false;
+
 
 
     public Vector2 Velocity { get; private set; } // Object's current velocity (updated by physics).
@@ -50,6 +55,9 @@ public class CustomPhysicsBody: MonoBehaviour
     {
         CustomPhysicsEngine.Instance?.DeregisterBody(this);
     }
+
+    // ReduceGravityDelay() reduces gravity delay by a time value before allowing gravity.
+    public void ReduceGravityDelay(float deltaTime) => gravityDelay -= deltaTime;
 
     #region **Setters & Getters**
     /*
@@ -81,6 +89,8 @@ public class CustomPhysicsBody: MonoBehaviour
     public Vector2 SetAcceleration(Vector2 newAcceleration) => Acceleration = newAcceleration;
     // SetInitialAcceleration() using a new initial acceleration when spawning the object.
     public Vector2 SetInitialAcceleration(Vector2 newInitialAcceleration) => initialAcceleration = newInitialAcceleration;
+    // SetGravityDelay() using a new gravity delay for preventing gravity being used.
+    public float SetGravityDelay(float newGravityDelay) => gravityDelay = newGravityDelay;
     // SetRestitution() using new resititution which directly modifies the physics value.
     public float SetRestitution(float newRestitution) => restitution = newRestitution;
     /*
@@ -88,9 +98,16 @@ public class CustomPhysicsBody: MonoBehaviour
      * - Used by physics calculations to disable gravity when resting.
      */
     public void SetGrounded(bool value) => isGrounded = value;
+    /*
+     * SetKinematic() uses the value to set the object to require custom kinematic physics to be false/true.
+     * - Used by physics calculations to disable gravity when resting.
+     */
+    public void SetKinematic(bool value) => isKinematic = value;
 
     // GetGravityScale() returns the object's gravity scale which directly modifies the physics value.
     public float GetGravityScale() => gravityScale;
+    // GetGravityDelay() returns the object's gravity delay which may prevent gravity being applied.
+    public float GetGravityDelay() => gravityDelay;
     /*
      * GetMass() returns the object's mass which directly modifies the physics value.
      * - Must avoid negative mass values due to calculation issues.
@@ -103,6 +120,11 @@ public class CustomPhysicsBody: MonoBehaviour
      * - Grounded objects stop gravity updates.
      */
     public bool IsGrounded() => isGrounded;
+    /* 
+     * IsKinematic() returns true if the object requires custom kinematic physics. False otherwise.
+     * 
+     */
+    public bool IsKinematic() => isKinematic;
     #endregion
 
 }

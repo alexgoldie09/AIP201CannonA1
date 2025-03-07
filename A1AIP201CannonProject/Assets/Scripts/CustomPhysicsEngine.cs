@@ -61,6 +61,17 @@ public class CustomPhysicsEngine : MonoBehaviour
      */
     private void UpdateVelocity(CustomPhysicsBody body, float deltaTime)
     {
+        // Skip physics if the object is in kinematic mode.
+        if (body.IsKinematic()) { return; }
+
+        // If gravity delay is active, decrement it and skip applying gravity.
+        if (body.GetGravityDelay() > 0f)
+        {
+            body.ReduceGravityDelay(deltaTime);
+            body.SetVelocity(body.Velocity * 0.99f);
+            return;
+        }
+
         // If the object is grounded, skip gravity updates
         if (body.IsGrounded()) { return; }
 

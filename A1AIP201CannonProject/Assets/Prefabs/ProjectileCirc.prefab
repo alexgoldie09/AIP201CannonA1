@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7570430391022304855}
   - component: {fileID: 4575441043357990387}
   m_Layer: 0
-  m_Name: Projectile 2
+  m_Name: ProjectileCirc
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -75,7 +75,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: 7482667652216324306, guid: 75f5f34dc1b5347e0b8351032682f224, type: 3}
+  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
   m_Color: {r: 1, g: 0.9059082, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -100,10 +100,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   initialVelocity: {x: 0, y: 0}
   initialAcceleration: {x: 0, y: 0}
-  gravityScale: 0.3
-  mass: 5
-  restitution: 0
+  gravityScale: 1
+  mass: 2
+  restitution: 1
   isGrounded: 0
+  isKinematic: 0
 --- !u!114 &4575441043357990387
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -116,5 +117,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3c62ebf6fcaa51438301de91c6cb60c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 0
+  type: 2
   destroyThresholdY: -10
