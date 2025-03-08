@@ -60,16 +60,16 @@
     <Analyzer Include="D:\Unity\Hub\Editor\2022.3.32f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\CustomCollider.cs" />
-    <Compile Include="Assets\Scripts\TrajectoryVisualiser.cs" />
-    <Compile Include="Assets\Scripts\CustomPhysicsEngine.cs" />
-    <Compile Include="Assets\Scripts\CannonController.cs" />
-    <Compile Include="Assets\Scripts\CustomPhysicsBody.cs" />
-    <Compile Include="Assets\Scripts\FlightTimeDisplay.cs" />
-    <Compile Include="Assets\Scripts\CannonTargetFire.cs" />
-    <Compile Include="Assets\Scripts\CannonFire.cs" />
-    <Compile Include="Assets\Scripts\KinematicProjectile.cs" />
-    <Compile Include="Assets\Scripts\CircleSpawner.cs" />
+    <Compile Include="Assets\Scripts\Cannon\CannonTargetFire.cs" />
+    <Compile Include="Assets\Scripts\Cannon\CannonController.cs" />
+    <Compile Include="Assets\Scripts\Scene Extras\FlightTimeDisplay.cs" />
+    <Compile Include="Assets\Scripts\Scene Extras\KinematicProjectile.cs" />
+    <Compile Include="Assets\Scripts\Custom Physics\CustomCollider.cs" />
+    <Compile Include="Assets\Scripts\Cannon\CannonFire.cs" />
+    <Compile Include="Assets\Scripts\Custom Physics\CustomPhysicsEngine.cs" />
+    <Compile Include="Assets\Scripts\Custom Physics\CustomPhysicsBody.cs" />
+    <Compile Include="Assets\Scripts\Scene Extras\MainMenuController.cs" />
+    <Compile Include="Assets\Scripts\Scene Extras\CircleSpawner.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
