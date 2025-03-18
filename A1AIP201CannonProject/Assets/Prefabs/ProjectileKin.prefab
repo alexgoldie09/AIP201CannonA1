@@ -104,7 +104,7 @@ MonoBehaviour:
   gravityScale: 0.8
   mass: 3
   restitution: 0
-  isGrounded: 0
+  gravityDelay: 0
   isKinematic: 0
 --- !u!114 &4575441043357990387
 MonoBehaviour:
@@ -132,5 +132,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df2e416720c2ed04983406e069148a43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetPosition: {x: 0, y: 0, z: 0}
-  flightTime: 2
+  maxSpeed: 15
+  acceleration: 20
+  gravityDelayOnTransition: 0.2

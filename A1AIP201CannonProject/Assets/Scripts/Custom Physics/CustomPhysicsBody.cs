@@ -75,7 +75,7 @@ public class CustomPhysicsBody: MonoBehaviour
         // If new velocity is applied, wake up the object
         if (newVelocity.magnitude > 0.1f) { SetGrounded(false); }
 
-        // Manually stop very small movement
+        // Manually stop very small movement, prevents jitteryness
         float velocityThreshold = 0.1f;
         if (Mathf.Abs(newVelocity.x) < velocityThreshold) { newVelocity.x = 0f; }
         if (Mathf.Abs(newVelocity.y) < velocityThreshold) { newVelocity.y = 0f; }

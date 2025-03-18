@@ -84,7 +84,7 @@ public class CustomPhysicsEngine : MonoBehaviour
         // Apply acceleration to velocity
         Vector2 updatedVelocity = body.Velocity + newAcceleration * deltaTime;
 
-        // Apply damping for smooth bouncing
+        // Apply damping for simulating friction, or other drag forces
         float dampingFactor = 0.99f;
         updatedVelocity *= dampingFactor;
 
